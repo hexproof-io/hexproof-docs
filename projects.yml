@@ -1,0 +1,193 @@
+###
+# * Project Definitions
+# * Defines how documentation is generated for each of our respective projects.
+###
+proxyshop:
+  title: Proxyshop
+
+  # Define Mkdocs Custom Configuration
+  meta:
+
+    # Repository Details
+    repo_name: Investigamer/proxyshop
+    repo_url: https://github.com/Investigamer/proxyshop
+    remote_branch: main
+
+  # Define Documentation Structure
+  docs:
+
+
+    # Main navigation
+    Proxyshop:
+      type: static
+      file: index.md
+    User Guide:
+      User Guide:
+        type: static
+        file: user-guide/index.md
+      Using the GUI:
+        type: static
+        file: user-guide/gui.md
+      About Art Files:
+        type: static
+        file: user-guide/art.md
+      About Fonts:
+        type: static
+        file: user-guide/fonts.md
+      FAQ:
+        type: static
+        file: user-guide/faq.md
+    Creator Guide:
+      Creator Guide:
+        type: static
+        file: creator-guide/index.md
+      Environment Variables:
+        type: static
+        file: creator-guide/env.md
+
+    # Generate code reference
+    Code Reference:
+      Card Layouts:
+        type: generate
+        src: src.layouts
+      Templates:
+        type: generate
+        src: src.templates
+      Text Layers:
+        type: generate
+        src: src.text_layers
+      Schemas:
+        type: generate
+        src: src.schema
+      Photoshop Utils:
+        type: generate
+        src: src.helpers
+      General Utils:
+        type: generate
+        src: src.utils
+
+    # Extras
+    Credits:
+      type: static
+      file: credits.md
+    Changelog:
+      type: collect
+      file: CHANGELOG.md
+    License:
+      type: collect
+      file: LICENSE.md
+
+  # Configure Mkdocstrings Generation
+  options:
+    docstrings:
+      classes:
+        show_root_members_full_path: false
+        show_category_heading: true
+        show_root_full_path: true
+        show_root_heading: true
+      functions:
+        show_root_members_full_path: false
+        show_category_heading: true
+        show_root_full_path: true
+        show_root_heading: true
+
+  # Included source assets
+  include:
+    - src/img
+    - src/data
+
+  # Additional plugins
+  plugins:
+    - search
+
+mtg-vectors:
+  title: MTG Vectors
+
+  # Mkdocs Metadata
+  meta:
+    repo_name: Investigamer/mtg-vectors
+    repo_url: https://github.com/Investigamer/mtg-vectors
+    remote_branch: main
+
+  # Documentation Structure
+  docs:
+    MTG Vectors:
+      type: collect
+      file: README.md
+    Changelog:
+      type: collect
+      file: CHANGELOG.md
+    License:
+      type: collect
+      file: LICENSE.md
+
+  # Included source assets
+  include:
+    - data
+
+  # Additional plugins
+  plugins:
+    - search
+
+hexproof-api:
+  title: Hexproof API
+
+  # Mkdocs Metadata
+  meta:
+    repo_name: Investigamer/hexproof.io
+    repo_url: https://github.com/Investigamer/hexproof.io
+    remote_branch: main
+
+  # Documentation Structure
+  docs:
+    Hexproof API:
+      type: collect
+      file: README.md
+    Endpoints:
+      type: static
+      file: endpoints.md
+    Changelog:
+      type: collect
+      file: CHANGELOG.md
+    License:
+      type: collect
+      file: LICENSE.md
+
+  # Included files
+  include:
+    - openapi.json
+
+  # Extra CSS
+  css:
+    - assets/neoteroi.css
+
+  # Additional plugins
+  plugins:
+    - search
+    - neoteroi.mkdocsoad:
+        use_pymdownx: true
+
+hexproof:
+  title: Hexproof Module
+
+  # Mkdocs Metadata
+  meta:
+    repo_name: Investigamer/hexproof
+    repo_url: https://github.com/Investigamer/hexproof
+    remote_branch: main
+
+  # Documentation Structure
+  docs:
+    Hexproof Module:
+      type: collect
+      file: README.md
+    Changelog:
+      type: collect
+      file: CHANGELOG.md
+    License:
+      type: collect
+      file: LICENSE.md
+
+  # Additional plugins
+  plugins:
+    - search

@@ -1,0 +1,10 @@
+services:
+
+  hexproof-docs:
+    image: investigamer/hexproof-docs:latest
+    container_name: hexproof-docs
+    ports:
+      - "8100:80"
+    environment:
+      # URL to use in mkdocs.yml, add your domain here
+      - MKDOCS_BASE_URL=localhost

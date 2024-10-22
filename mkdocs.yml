@@ -1,0 +1,168 @@
+# Site Details
+site_name: Hexproof Systems
+site_author: Investigamer
+site_url: https://docs.hexproof.io
+docs_dir: docs
+site_dir: site
+
+# Allow name "templates"
+exclude_docs: "
+  !/templates/
+"
+
+# Theme
+theme:
+  name: material
+  custom_dir: overrides
+  font:
+    code: 'JetBrains Mono'
+  logo: assets/logo.svg
+  favicon: assets/favicon.ico
+  icon:
+    previous: fontawesome/solid/angle-left
+    next: fontawesome/solid/angle-right
+  features:
+    - navigation.footer
+    - navigation.top
+    - navigation.tabs
+    - navigation.path
+    - navigation.instant
+    - navigation.indexes
+    - toc.follow
+
+  # Palette toggle for automatic mode
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      primary: blue grey
+      accent: light blue
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+      primary: black
+      accent: light blue
+
+# Validation
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    absolute_links: warn
+    unrecognized_links: warn
+
+# Markdown Extensions
+markdown_extensions:
+- admonition
+- def_list
+- footnotes
+- meta
+- toc
+- pymdownx.extra
+- pymdownx.arithmatex
+- pymdownx.betterem
+- pymdownx.caret
+- pymdownx.critic
+- pymdownx.details
+- pymdownx.fancylists
+- pymdownx.highlight:
+    guess_lang: true
+    default_lang: py3
+    linenums: True
+- pymdownx.inlinehilite
+- pymdownx.magiclink
+- pymdownx.mark
+- pymdownx.pathconverter
+- pymdownx.snippets
+- pymdownx.saneheaders
+- pymdownx.smartsymbols
+- pymdownx.superfences
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.tasklist:
+    custom_checkbox: true
+- pymdownx.emoji:
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg ''
+    emoji_index: !!python/name:material.extensions.emoji.twemoji ''
+- pymdownx.tilde
+- attr_list
+- md_in_html
+
+# Plugins
+plugins:
+  - include-markdown
+  - autolinks
+  - minify:
+      htmlmin_opts:
+        remove_comments: true
+      minify_css: true
+      minify_html: true
+      minify_js: true
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: true
+              merge_init_into_class: true
+            heading_level: 2
+            filters: [ "!^_" ]
+            group_by_category: true
+            modernize_annotations: true
+            show_labels: false
+            show_bases: true
+            show_category_heading: true
+            show_docstring_attributes: true
+            show_docstring_classes: true
+            show_docstring_examples: true
+            show_docstring_functions: true
+            show_docstring_other_parameters: false
+            show_inherited_members: true
+            show_object_full_path: false
+            show_root_toc_entry: true
+            show_signature: true
+            show_signature_annotations: true
+            show_source: true
+            rendering:
+              show_if_no_docstring: false
+          paths:
+            - "../../hexdoc"
+
+# Navigation
+nav:
+  - About:
+      - About: index.md
+      - Code of Conduct: conduct.md
+  - Proxyshop: /proxyshop/
+  - MTG Vectors: /mtg-vectors/
+  - Hexproof Module: /hexproof/
+  - Hexproof API: /hexproof-api/
+
+# Extra Details
+extra:
+  social:
+    - icon: simple/patreon
+      link: https://patreon.com/mpcfill
+    - icon: simple/github
+      link: https://github.com/investigamer
+
+# Extra CSS
+extra_css:
+  - assets/stylesheets/custom.css

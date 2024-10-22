@@ -1,0 +1,20 @@
+# Dotfiles
+.dockerignore
+.env
+.git
+.gitignore
+.idea
+.venv
+env
+venv
+
+# Projects and generated mkdocs files
+projects/*/docs
+projects/*/overrides
+projects/*/repo
+projects/*/site
+projects/*/mkdocs.yml
+
+# Local docker files
+docker/docker-compose.local.*
+docker/docker-compose.yml
