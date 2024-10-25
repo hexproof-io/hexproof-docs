@@ -4,7 +4,7 @@
 
 [tool.poetry]
 name = "hexproof-docs"
-version = "0.1.0"
+version = "0.2.0"
 description = "Automatic static doc site generation for all my projects, powered by MkDocs + Material."
 authors = ["Chris <hexproofsystems@gmail.com>"]
 license = "MPL-2.0"
@@ -45,7 +45,7 @@ build-backend = "poetry.core.masonry.api"
 ###
 
 [tool.commitizen]
-version = "0.1.0"
+version = "0.2.0"
 encoding = "utf-8"
 tag_format = "$major.$minor.$patch"
 update_changelog_on_bump = true
