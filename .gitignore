@@ -168,4 +168,4 @@ projects/*/site
 projects/*/mkdocs.yml
 
 # Local docker files
-docker/docker-compose.local.*
+docker/**/docker-compose.local.*

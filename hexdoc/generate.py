@@ -9,7 +9,7 @@ from shutil import rmtree
 
 # Third Party Imports
 from omnitils.api.github import gh_download_repository
-from omnitils.files import load_data_file, dump_data_file
+from omnitils.files import load_data_file, dump_data_file, mkdir_full_perms
 from omnitils.logs import logger
 from pathlib import Path
 from typer import Typer
@@ -47,13 +47,21 @@ def generate_main() -> None:
     # Inject our site URL
     _cfg = load_data_file(PATH_MKDOCS_YML)
     _cfg['site_url'] = BASE_URL
-    dump_data_file(_cfg, Path(PATH_MAIN, 'mkdocs.yml'))
+    _repo_dir = PATH_MAIN / 'repo'
+
+    # Remove repo if present
+    if _repo_dir.is_dir():
+        rmtree(_repo_dir)
+        if _repo_dir.is_dir():
+            rmdir(_repo_dir)
+    mkdir_full_perms(_repo_dir)
+    dump_data_file(_cfg, Path(_repo_dir, 'mkdocs.yml'))
 
     # Import Files
     import_defaults(PATH_MAIN)
 
     # Build static site
-    subprocess.call(f'mkdocs build -f projects/main/mkdocs.yml', shell=True)
+    subprocess.call(f'cd projects/main/repo && mkdocs build -f mkdocs.yml', shell=True)
     logger.success('Documentation generated!')
 
 
@@ -81,11 +89,9 @@ def generate_project(project: str) -> None:
 
     # Load main config, import defaults
     cfg_mkdocs = load_data_file(PATH_MKDOCS_YML)
-    import_defaults(project.path_root)
 
     # Remove repo if present
-    # Todo: Add flag for this
-    if project.path_repo.is_dir():
+    """if project.path_repo.is_dir():
         rmtree(project.path_repo)
         if project.path_repo.is_dir():
             rmdir(project.path_repo)
@@ -97,6 +103,8 @@ def generate_project(project: str) -> None:
         os.rename(_repo, _repo.with_name('repo'))
     except Exception as e:
         logger.error(f"Failed to download repository: {e}")
+    """
+    import_defaults(project.path_root)
 
     # Update mkdocs metadata
     cfg_mkdocs.update(dict(
@@ -136,8 +144,8 @@ def generate_project(project: str) -> None:
     import_includes(project)
 
     # Save mkdocs configuration file
-    dump_data_file(cfg_mkdocs, Path(project.path_root, 'mkdocs.yml'), config=dict(sort_keys=False))
+    dump_data_file(cfg_mkdocs, project.path_mkdocs, config=dict(sort_keys=False))
 
     # Build static site
-    subprocess.call(f'mkdocs build -f projects/{project_name}/mkdocs.yml', shell=True)
+    subprocess.call(f'cd ./projects/{project.name}/repo && mkdocs build -f mkdocs.yml', shell=True)
     logger.success('Documentation generated!')

@@ -9,8 +9,8 @@ proxyshop:
   meta:
 
     # Repository Details
-    repo_name: Investigamer/proxyshop
-    repo_url: https://github.com/Investigamer/proxyshop
+    repo_name: Investigamer/Proxyshop
+    repo_url: https://github.com/Investigamer/Proxyshop
     remote_branch: main
 
   # Define Documentation Structure
@@ -81,15 +81,9 @@ proxyshop:
   options:
     docstrings:
       classes:
-        show_root_members_full_path: false
-        show_category_heading: true
-        show_root_full_path: true
-        show_root_heading: true
+        show_source: true
       functions:
-        show_root_members_full_path: false
-        show_category_heading: true
-        show_root_full_path: true
-        show_root_heading: true
+        show_source: true
 
   # Included source assets
   include:

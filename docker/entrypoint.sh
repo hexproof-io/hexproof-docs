@@ -1,19 +1,5 @@
 #!/bin/bash
 
-# Default domain
-MKDOCS_BASE_URL=${MKDOCS_BASE_URL:-"https://hexproof.io"}
-
-# Remove nginx defaults
-echo 'Removing NGINX defaults ...'
-service nginx stop || echo 'Failed to shutdown NGINX!'
-rm -f /etc/nginx/conf.d/default.conf \
-  && unlink /etc/nginx/sites-enabled/default \
-  || echo 'Failed to remove NGINX defaults!'
-
-# Generate documentation
-hexdoc gen .
-chmod 777 -R /app/projects
-
 # Create base nginx configuration
 cat <<EOL > /etc/nginx/conf.d/nginx.conf
 server {
@@ -36,12 +22,12 @@ server {
 EOL
 
 # Add each project to nginx configuration
-for dir in /app/projects/*; do
+for dir in /sites/*; do
     project=$(basename "$dir")
     if [ "$project" != "main" ]; then
       cat <<EOL >> /etc/nginx/conf.d/nginx.conf
     location /$project {
-        alias /app/projects/$project/site/;
+        alias /sites/$project/;
         index index.html;
         if (\$request_uri ~ ^/(.*)\.html(\?|$)) {
             return 302 /$1;
@@ -56,7 +42,7 @@ done
 # Finalize and print nginx configuration
 cat <<EOL >> /etc/nginx/conf.d/nginx.conf
     location / {
-        root /app/projects/main/site;
+        root /sites/main;
         index index.html;
         if (\$request_uri ~ ^/(.*)\.html(\?|$)) {
             return 302 /$1;

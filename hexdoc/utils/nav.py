@@ -38,7 +38,9 @@ def get_nav_item_generated(
     # Generate markdown for each file in directory
     if src_path.is_dir():
         _tree = []
-        for _next in src_path.iterdir():
+        _modules = [n for n in src_path.iterdir() if n.is_dir()]
+        _modules.extend([n for n in src_path.iterdir() if not n.is_dir()])
+        for _next in sorted(_modules, key=lambda x: x.stem):
             _module = f"{module}.{_next.stem}"
             _title = _next.stem.title().replace('_', ' ').strip()
             _item = get_nav_item_generated(
@@ -46,7 +48,7 @@ def get_nav_item_generated(
                 module=_module,
                 dir_path=[*dir_path, src_path.stem])
             if _item is not None:
-                _tree.append({_next.stem.title(): _item})
+                _tree.append({_title: _item})
         return _tree
 
     # Generate markdown for a python file

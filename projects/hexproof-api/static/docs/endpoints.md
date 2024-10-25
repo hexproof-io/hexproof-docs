@@ -8,4 +8,4 @@
 
 </style>
 
-[OAD(projects/hexproof-api/docs/openapi.json)]
+[OAD(openapi.json)]

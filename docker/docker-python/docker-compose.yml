@@ -1,0 +1,18 @@
+###
+# * Full Setup
+# * Image where URL and GitHub token can be provided in env to change deployment behavior.
+# * Bundles Python, Poetry, and the project files. Builds static sites on launch and deploys with Nginx.
+###
+
+services:
+
+  hexproof-docs:
+    image: investigamer/hexproof-docs:latest
+    container_name: hexproof-docs
+    ports:
+      - "8100:80"
+    environment:
+      # URL to use in mkdocs.yml, add your domain here
+      - MKDOCS_BASE_URL=localhost
+      # GitHub token for using insider version of mkdocstrings
+      - GITHUB_TOKEN=null

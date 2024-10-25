@@ -36,6 +36,8 @@ def collect_markdown_file(project: Project, file: str) -> Optional[str]:
         return
     if path_to.exists():
         os.remove(path_to)
+    if not path_to.parent.is_dir():
+        mkdir_full_perms(path_to.parent)
     shutil.copy2(path_from, path_to)
     return file_to
 
@@ -78,7 +80,7 @@ def generate_markdown_file(
     # Only functions: Single markdown file
     if not classes:
         md_path = Path(project.path_docs, *dir_path, module_path.name).with_suffix('.md')
-        _options = f'\n{_T}{_T}'.join([f"{k}: {v}" for k, v in project.options.docstrings.functions])
+        _options = f'\n{_T}{_T}'.join([f"{k}: {v}" for k, v in project.options.docstrings.functions.items()])
         if not md_path.parent.is_dir():
             mkdir_full_perms(md_path.parent)
         with open(md_path, 'w', encoding='utf-8') as f:
@@ -101,13 +103,17 @@ def generate_markdown_file(
             _cls_name = _cls.split('.')[-1]
             _cls_path = (_parent / _cls_name.lower()).with_suffix('.md')
             _classes.append({_cls_name: '/'.join([*dir_path, module_path.stem, _cls_path.name])})
-            _options = f'\n{_T}{_T}'.join([f"{k}: {v}" for k, v in project.options.docstrings.classes])
+            _options = f'\n{_T}{_T}'.join([f"{k}: {v}" for k, v in project.options.docstrings.classes.items()])
             with open(_cls_path, 'w', encoding='utf-8') as f:
+                # Only show "Source" for methods
+                f.write("<style>details:not(.doc-children details) { visibility: hidden; display: none; }</style>")
                 f.write(
                     f"# {_cls_name}\n\n"
                     f"::: {_cls}\n"
                     f"{_T}options:\n"
                     f"{_T}{_T}{_options}\n\n")
+        if not funcs:
+            return _classes
         _tree.append({'Classes': _classes})
 
     # Add functions file to tree
@@ -115,7 +121,7 @@ def generate_markdown_file(
         _func_path = _parent / 'functions.md'
         _tree.append({
             'Functions': '/'.join([*dir_path, module_path.stem, 'functions.md'])})
-        _options = f'\n{_T}{_T}'.join([f"{k}: {v}" for k, v in project.options.docstrings.functions])
+        _options = f'\n{_T}{_T}'.join([f"{k}: {v}" for k, v in project.options.docstrings.functions.items()])
         with open(_func_path, 'w', encoding='utf-8') as f:
             f.write(f"# Functions\n\n")
             for _func in funcs:

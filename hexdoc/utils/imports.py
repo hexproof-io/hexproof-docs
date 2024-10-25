@@ -3,7 +3,7 @@
 """
 # Standard Library Imports
 from pathlib import Path
-from shutil import rmtree, copytree, copy2, SameFileError
+from shutil import copytree, copy2, SameFileError
 
 # Local Imports
 from hexdoc._constants import PATH_COMMON
@@ -17,27 +17,20 @@ def import_defaults(root_dir: Path) -> None:
     Args:
         root_dir (Path): Root directory of the project.
     """
-    _overrides_dir = root_dir / 'overrides'
     _static_dir = root_dir / 'static'
-    _docs_dir = root_dir / 'docs'
-
-    # Remove current docs and overrides
-    if _docs_dir.is_dir():
-        rmtree(_docs_dir)
-    if _overrides_dir.is_dir():
-        rmtree(_overrides_dir)
+    _repo_dir = root_dir / 'repo'
 
     # Add common files
     copytree(
         PATH_COMMON,
-        root_dir,
+        _repo_dir,
         dirs_exist_ok=True)
 
-    # Add docs files
+    # Add static files
     if _static_dir.is_dir():
         copytree(
             _static_dir,
-            root_dir,
+            _repo_dir,
             dirs_exist_ok=True)
 
 

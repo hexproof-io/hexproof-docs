@@ -1,3 +1,8 @@
+###
+# * Minimal Setup
+# * Prebuilt image where URL is specified during BUILD.
+# * Does not include Python, Poetry, or the project files. Serves pre-built static sites with Nginx.
+###
 services:
 
   hexproof-docs:
@@ -5,6 +10,3 @@ services:
     container_name: hexproof-docs
     ports:
       - "8100:80"
-    environment:
-      # URL to use in mkdocs.yml, add your domain here
-      - MKDOCS_BASE_URL=localhost

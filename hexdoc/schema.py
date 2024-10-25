@@ -25,18 +25,10 @@ class ProjectMeta(Schema):
     remote_branch: str
 
 
-class ProjectOptionTreeDocstringsKeys(Schema):
-    """Keys for the Mkdocstrings option tree in a defined project."""
-    show_root_members_full_path: bool = False
-    show_category_heading: bool = True
-    show_root_full_path: bool = False
-    show_root_heading: bool = True
-
-
 class ProjectOptionTreeDocstrings(Schema):
     """Mkdocstrings option tree for a defined project."""
-    classes: ProjectOptionTreeDocstringsKeys = Field(default_factory=ProjectOptionTreeDocstringsKeys)
-    functions: ProjectOptionTreeDocstringsKeys = Field(default_factory=ProjectOptionTreeDocstringsKeys)
+    classes: dict = Field(default_factory=dict)
+    functions: dict = Field(default_factory=dict)
 
 
 class ProjectOptionTree(Schema):
@@ -85,38 +77,47 @@ class Project(Schema):
 
     @computed_field
     @cached_property
+    def repo(self) -> str:
+        return self.meta.repo_name
+
+    # Top-Level Directories
+
+    @computed_field
+    @cached_property
     def path_root(self) -> Path:
-        return Path(PATH_PROJECTS, self.name)
-
-    @computed_field
-    @cached_property
-    def path_docs(self) -> Path:
-        return Path(self.path_root, 'docs')
-
-    @computed_field
-    @cached_property
-    def path_repo(self) -> Path:
-        return Path(self.path_root, 'repo')
-
-    @computed_field
-    @cached_property
-    def path_site(self) -> Path:
-        return Path(self.path_root, 'site')
-
-    @computed_field
-    @cached_property
-    def path_overrides(self) -> Path:
-        return Path(self.path_root, 'overrides')
+        return PATH_PROJECTS / self.name
 
     @computed_field
     @cached_property
     def path_static(self) -> Path:
-        return Path(self.path_root, 'static')
+        return self.path_root / 'static'
+
+    # Repository Directories
 
     @computed_field
     @cached_property
-    def repo(self) -> str:
-        return self.meta.repo_name
+    def path_repo(self) -> Path:
+        return self.path_root / 'repo'
+
+    @computed_field
+    @cached_property
+    def path_docs(self) -> Path:
+        return self.path_repo / 'docs'
+
+    @computed_field
+    @cached_property
+    def path_site(self) -> Path:
+        return self.path_repo / 'site'
+
+    @computed_field
+    @cached_property
+    def path_overrides(self) -> Path:
+        return self.path_repo / 'overrides'
+
+    @computed_field
+    @cached_property
+    def path_mkdocs(self) -> Path:
+        return self.path_repo / 'mkdocs.yml'
 
 
 """
